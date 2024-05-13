@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace RecipeApp // Change to New Repo as per Instructions of Lecturer After submitting week before 
+namespace RecipeApp
 {
     class Program
     {
@@ -77,45 +78,43 @@ namespace RecipeApp // Change to New Repo as per Instructions of Lecturer After 
 
     class Recipe                                        //Class Recipe to Store and Call data of the user data
     {
-        private string[] ingredients;
-        private string[] steps;
+        private List<string> ingredients; // Change from string[] to List<string>
+        private List<string> steps; // Change from string[] to List<string>
 
         public Recipe()
         {
-            ingredients = new string[0];                //Ingredients Array Created to store Ingredients
-            steps = new string[0];              //Number of Steps Array Created to store Ingredients
+            ingredients = new List<string>(); //Ingredients Array Created to store Ingredients
+            steps = new List<string>(); //Number of Steps Array Created to store Ingredients
         }
 
-        public void AddIngredient(string name, double quantity, string unit)                //Method created to store ingredients to Array Ingredients
+        public void AddIngredient(string name, double quantity, string unit) //Method created to store ingredients to Array Ingredients
         {
-            Array.Resize(ref ingredients, ingredients.Length + 1);
-            ingredients[ingredients.Length - 1] = $"{quantity} {unit} of {name}";
+            ingredients.Add($"{quantity} {unit} of {name}");
         }
 
-        public void AddStep(string step)                //Method created to store steps to Array steps
+        public void AddStep(string step) //Method created to store steps to Array steps
         {
-            Array.Resize(ref steps, steps.Length + 1);
-            steps[steps.Length - 1] = step;
+            steps.Add(step);
         }
 
-        public void DisplayRecipe()                 //Method to display recipe
+        public void DisplayRecipe() //Method to display recipe
         {
             Console.WriteLine("Ingredients:");
             foreach (var ingredient in ingredients)
             {
-                Console.WriteLine(ingredient);          //Print each Ingredient
+                Console.WriteLine(ingredient); //Print each Ingredient
             }
 
             Console.WriteLine("\nSteps:");
-            for (int i = 0; i < steps.Length; i++)
+            for (int i = 0; i < steps.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {steps[i]}"); //Print each step
             }
         }
 
-        public void ScaleRecipe(double factor)          //Method to scale recipe 
+        public void ScaleRecipe(double factor) //Method to scale recipe 
         {
-            for (int i = 0; i < ingredients.Length; i++)            //Loop through ingredients
+            for (int i = 0; i < ingredients.Count; i++) //Loop through ingredients
             {
                 string[] parts = ingredients[i].Split(' ');
                 double quantity = double.Parse(parts[0]);
@@ -123,10 +122,10 @@ namespace RecipeApp // Change to New Repo as per Instructions of Lecturer After 
                 ingredients[i] = $"{quantity} {parts[1]} of {string.Join(" ", parts, 3, parts.Length - 3)}";
             }
             Console.WriteLine($"\nRecipe scaled by factor {factor}.");
-            DisplayRecipe();                                                    //Display Scaled Recipe
+            DisplayRecipe(); //Display Scaled Recipe
         }
 
-        public void ResetQuantities()   //Method to reset qty of recipe
+        public void ResetQuantities() //Method to reset qty of recipe
         {
             Console.WriteLine("\nQuantities reset to original values.");
             DisplayRecipe();
@@ -134,18 +133,9 @@ namespace RecipeApp // Change to New Repo as per Instructions of Lecturer After 
 
         public void ClearRecipe() //Method to clear recipe
         {
-            ingredients = new string[0];
-            steps = new string[0];
+            ingredients.Clear();
+            steps.Clear();
             Console.WriteLine("\nRecipe cleared.");
         }
-
-
-
-
     }
 }
-
-
-
-
-   
